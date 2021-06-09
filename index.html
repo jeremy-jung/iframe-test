@@ -44,7 +44,10 @@
                             index: 0x0001   // Interface 1 is the recipient
                         });
                         console.log("done control transfer out")
-                        for (let i = 0; i < 6; i ++) {
+                        // 0 (out of range)
+                        // 1 (not part of interface)
+                        // 2 (not part of interface)
+                        for (let i = 3; i < 6; i ++) {
                             try {
                                 console.log(i, await device.transferIn(i, 6));
                             }
