@@ -45,7 +45,7 @@
                         });
                         console.log("done control transfer out")
                         for (let i = 0; i < 6; i ++) {
-                            console.log(i, device.transferIn(i, 6));
+                            console.log(i, await device.transferIn(i, 6));
                         }
                         // while (true) {
                             // let result = await device.transferIn(1, 6);
