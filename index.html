@@ -20,6 +20,7 @@
                     console.log(device.configuration);   
                     console.log(device.deviceProtocol);  // 0
                     
+                    // print paired devices
                     navigator.usb.getDevices()
                     .then(devices => {
                           console.log("Total devices: " + devices.length);
@@ -27,15 +28,11 @@
                             console.log("Product name: " + device.productName + ", serial number " + device.serialNumber);
                         });
                     })
-                    await device.open();
 
-                    device.claimInterface(0)
-                    .then(() => {
-                        console.log("here")
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    })
+                    await device.open();
+                    await device.selectConfiguration(1);
+                    await device.claimInterface(0);
+
                     // device.open()
                     // .then(() => {
                             // console.log("here")
