@@ -37,7 +37,7 @@
                         await device.claimInterface(device.configuration.interfaces[1].interfaceNumber);
                         console.log("done claiming interface")
                         console.log(await device.controlTransferIn({
-                            requestType: 'vendor',
+                            requestType: 'standard',
                             recipient: 'interface',
                             request: 0x01,  // vendor-specific request: enable channels
                             value: 0x0013,  // 0b00010011 (channels 1, 2 and 5)
