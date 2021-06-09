@@ -15,6 +15,8 @@
         document.getElementById("test").addEventListener("click", async () => {
             navigator.usb.requestDevice({ filters: [{}] })
                 .then(async (device) => {
+                    await device.reset();
+                    console.log("done resetting USB device");
                     console.log(device.productName);      // LEGO Technic Large Hub in FS Mode
                     console.log(device.manufacturerName); // LEGO System A/S
                     console.log(device.configuration);   
@@ -30,8 +32,11 @@
                     })
 
                     await device.open();
+                    console.log("done opening usb device")
                     await device.selectConfiguration(1);
-                    await device.claimInterface(0);
+                    console.log("done selecting config")
+                    await device.claimInterface(device.configuration.interfaces[0].interfaceNumber);
+                    console.log("done claiming interface")
 
                     // device.open()
                     // .then(() => {
@@ -41,7 +46,10 @@
                         // console.error(err);
                     // })
                 })
-                .catch(error => { console.error(error); })
+                .catch(error => { 
+                    console.error(error); 
+
+                })
         })
         
         navigator.usb.addEventListener('connect', event => {
