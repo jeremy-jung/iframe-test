@@ -2,14 +2,63 @@
 <html>
 
     <head>
-        <script
-            src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface@1.1.0/cdn/ServiceDock_scaled.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface@1.1.0/cdn/ServiceDock_scaled.min.js"></script>
     </head>
 
     <body>
         <div>
             <service-spike id="service_spike"></service-spike>
+            <button id ="test" style = "height: 300px; width: 300px;"></button>
         </div>
     </body>
+    <script>
+        document.getElementById("test").addEventListener("click", async () => {
+            navigator.usb.requestDevice({ filters: [{}] })
+                .then(async (device) => {
+                    console.log(device.productName);      // LEGO Technic Large Hub in FS Mode
+                    console.log(device.manufacturerName); // LEGO System A/S
+                    console.log(device.configuration);   
+                    console.log(device.deviceProtocol);  // 0
+                    
+                    navigator.usb.getDevices()
+                    .then(devices => {
+                          console.log("Total devices: " + devices.length);
+                        devices.forEach(device => {
+                            console.log("Product name: " + device.productName + ", serial number " + device.serialNumber);
+                        });
+                    })
+                    await device.open();
 
+                    device.claimInterface(0)
+                    .then(() => {
+                        console.log("here")
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    })
+                    // device.open()
+                    // .then(() => {
+                            // console.log("here")
+                        // })
+                    // .catch( (err) => {
+                        // console.error(err);
+                    // })
+                })
+                .catch(error => { console.error(error); })
+        })
+        
+        navigator.usb.addEventListener('connect', event => {
+            // Add event.device to the UI.
+            console.log("connected")
+            console.log(event.device)
+        });
+
+        navigator.usb.addEventListener('disconnect', event => {
+            // Remove event.device from the UI.
+            console.log("disconnected")
+            console.log(event.device)
+        });
+
+
+    </script>
 </html>
