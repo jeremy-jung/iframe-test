@@ -38,7 +38,7 @@
                         console.log("done claiming interface")
                         console.log(await device.controlTransferIn({
                             requestType: 'standard',
-                            recipient: 'interface',
+                            recipient: 'endpoint',
                             request: 0x01,  // vendor-specific request: enable channels
                             value: 0x0013,  // 0b00010011 (channels 1, 2 and 5)
                             index: 0x0001   // Interface 1 is the recipient
