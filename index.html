@@ -42,7 +42,7 @@
                             request: 0x01,  // vendor-specific request: enable channels
                             value: 0x0013,  // 0b00010011 (channels 1, 2 and 5)
                             index: 0x0001   // Interface 1 is the recipient
-                        }));
+                        }, 64));
                         console.log("done control transfer out")
                         // 0 (out of range)
                         // 1 (not part of interface)
