@@ -45,7 +45,7 @@
                         // });
                         console.log("done control transfer out")
                         while (true) {
-                            let result = await device.transferIn(0, 6);
+                            let result = await device.transferIn(1, 6);
                             console.log(result);
 
                             if (result.status === 'stall') {
