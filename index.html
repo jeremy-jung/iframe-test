@@ -45,8 +45,8 @@
                         });
                         console.log("done control transfer out")
                         while (true) {
-                            let result = await data.transferIn(1, 6);
-
+                            let result = await device.transferIn(1, 6);
+                            console.log(result);
                             if (result.data && result.data.byteLength === 6) {
                                 console.log('Channel 1: ' + result.data.getUint16(0));
                                 console.log('Channel 2: ' + result.data.getUint16(2));
