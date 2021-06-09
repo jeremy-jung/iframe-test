@@ -48,6 +48,8 @@
                         // 1 (not part of interface)
                         // 2 (not part of interface)
                         // 3 (??? pending promise)
+                        // 4 (not part of interface)
+                        // 5 (not part of interface)
                         for (let i = 4; i < 6; i ++) {
                             try {
                                 console.log(i, await device.transferIn(i, 6));
@@ -56,8 +58,9 @@
                                 console.error(i, e);
                             }
                         }
-                        
-                        for (let i = 4; i < 6; i++) {
+                        // 4 (not part of interface)
+                        // 5 (not part of interface)
+                        for (let i = 1; i < 6; i++) {
                             try {
                                 console.log(i, await device.isochronousTransferIn(i, 6))
                             }
