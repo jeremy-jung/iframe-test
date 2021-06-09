@@ -36,20 +36,30 @@
                         console.log("done selecting config")
                         await device.claimInterface(device.configuration.interfaces[1].interfaceNumber);
                         console.log("done claiming interface")
-                        await device.controlTransferOut({
+                        console.log(await device.controlTransferOut({
                             requestType: 'vendor',
                             recipient: 'interface',
                             request: 0x01,  // vendor-specific request: enable channels
                             value: 0x0013,  // 0b00010011 (channels 1, 2 and 5)
                             index: 0x0001   // Interface 1 is the recipient
-                        });
+                        }));
                         console.log("done control transfer out")
                         // 0 (out of range)
                         // 1 (not part of interface)
                         // 2 (not part of interface)
+                        // 3 (??? pending promise)
                         for (let i = 4; i < 6; i ++) {
                             try {
                                 console.log(i, await device.transferIn(i, 6));
+                            }
+                            catch (e) {
+                                console.error(i, e);
+                            }
+                        }
+                        
+                        for (let i = 4; i < 6; i++) {
+                            try {
+                                console.log(i, await device.isochronousTransferIn(i, 6))
                             }
                             catch (e) {
                                 console.error(i, e);
