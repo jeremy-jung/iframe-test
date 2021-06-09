@@ -29,13 +29,19 @@
                     console.log(device.manufacturerName); // LEGO System A/S
                     console.log(device.configuration);   
                     console.log(device.deviceProtocol);  // 0
-
-                    await device.open();
-                    console.log("done opening usb device")
-                    await device.selectConfiguration(1);
-                    console.log("done selecting config")
-                    await device.claimInterface(device.configuration.interfaces[0].interfaceNumber);
-                    console.log("done claiming interface")
+                    try {
+                        await device.open();
+                        console.log("done opening usb device")
+                        await device.selectConfiguration(1);
+                        console.log("done selecting config")
+                        await device.claimInterface(device.configuration.interfaces[0].interfaceNumber);
+                        console.log("done claiming interface")
+                    }
+                    catch (e) {
+                        console.error(e);
+                        await device.reset();
+                        await device.close();
+                    }
 
                     // device.open()
                     // .then(() => {
