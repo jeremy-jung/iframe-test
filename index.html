@@ -36,13 +36,13 @@
                         console.log("done selecting config")
                         await device.claimInterface(device.configuration.interfaces[1].interfaceNumber);
                         console.log("done claiming interface")
-                        // await device.controlTransferOut({
-                            // requestType: 'vendor',
-                            // recipient: 'interface',
-                            // request: 0x01,  // vendor-specific request: enable channels
-                            // value: 0x0013,  // 0b00010011 (channels 1, 2 and 5)
-                            // index: 0x0001   // Interface 1 is the recipient
-                        // });
+                        await device.controlTransferOut({
+                            requestType: 'vendor',
+                            recipient: 'interface',
+                            request: 0x01,  // vendor-specific request: enable channels
+                            value: 0x0013,  // 0b00010011 (channels 1, 2 and 5)
+                            index: 0x0001   // Interface 1 is the recipient
+                        });
                         console.log("done control transfer out")
                         while (true) {
                             let result = await device.transferIn(1, 6);
