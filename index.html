@@ -12,24 +12,23 @@
         </div>
     </body>
     <script>
+        navigator.usb.getDevices()
+        .then(devices => {
+            console.log("Total devices: " + devices.length);
+            devices.forEach(device => {
+                console.log("Paired device:")
+                console.log("Product name: " + device.productName + ", serial number " + device.serialNumber);
+            });
+        })
+        const VENDOR_ID = 0x0694; // LEGO SPIKE Prime Hub
         document.getElementById("test").addEventListener("click", async () => {
-            navigator.usb.requestDevice({ filters: [{}] })
+            navigator.usb.requestDevice({ filters: [{vendorId: VENDOR_ID}] })
                 .then(async (device) => {
-                    await device.reset();
-                    console.log("done resetting USB device");
+
                     console.log(device.productName);      // LEGO Technic Large Hub in FS Mode
                     console.log(device.manufacturerName); // LEGO System A/S
                     console.log(device.configuration);   
                     console.log(device.deviceProtocol);  // 0
-                    
-                    // print paired devices
-                    navigator.usb.getDevices()
-                    .then(devices => {
-                          console.log("Total devices: " + devices.length);
-                        devices.forEach(device => {
-                            console.log("Product name: " + device.productName + ", serial number " + device.serialNumber);
-                        });
-                    })
 
                     await device.open();
                     console.log("done opening usb device")
